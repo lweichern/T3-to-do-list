@@ -14,7 +14,7 @@ function Events() {
 
   const createEvent = api.event.create.useMutation({
     onSuccess: () => {
-      refetchEvents();
+      void refetchEvents();
     },
   });
   return (
@@ -23,7 +23,8 @@ function Events() {
         <input
           type="text"
           placeholder="Enter New Event..."
-          className="eventName focus:shadow-outline appearance-none rounded border bg-gray-700 px-3 py-2 leading-tight shadow focus:outline-none"
+          id="eventName"
+          className=" focus:shadow-outline appearance-none rounded border bg-gray-700 px-3 py-2 leading-tight shadow focus:outline-none"
           onKeyDown={(e) => {
             if (e.currentTarget.value.trim() == "") {
               return;
@@ -39,20 +40,20 @@ function Events() {
         />
         <button
           className="focus:shadow-outline ml-3 rounded bg-gray-500 p-2 font-bold text-white hover:bg-gray-700 focus:outline-none"
-          onClick={(e) => {
+          onClick={() => {
             if (
-              (document.getElementsByClassName("eventName") as any)?.[0]
-                ?.value == ""
+              (document.getElementById("eventName") as HTMLInputElement)
+                .value == ""
             ) {
               return;
             }
             createEvent.mutate({
-              name: (document.getElementsByClassName("eventName") as any)?.[0]
-                ?.value,
+              name: (document.getElementById("eventName") as HTMLInputElement)
+                .value,
             });
 
-            if (document.getElementsByClassName("eventName")) {
-              (document.getElementsByClassName("eventName") as any)[0].value =
+            if (document.getElementById("eventName")) {
+              (document.getElementById("eventName") as HTMLInputElement).value =
                 "";
             }
           }}

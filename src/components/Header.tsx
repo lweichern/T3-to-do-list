@@ -14,7 +14,7 @@ function Header() {
         {sessionData ? (
           <div
             className="w-10 cursor-pointer overflow-hidden rounded-full"
-            onClick={() => signOut()}
+            onClick={() => void signOut()}
           >
             <img
               src={sessionData?.user?.image ?? ""}
@@ -24,7 +24,7 @@ function Header() {
         ) : (
           <button
             className=" cursor-pointer rounded-md bg-[#2E2C2F] p-2 text-3xl text-white duration-75 hover:bg-[#434144]"
-            onClick={() => signIn()}
+            onClick={() => void signIn()}
           >
             Sign In
           </button>
