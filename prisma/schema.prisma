@@ -80,6 +80,8 @@ model Event {
 model Task {
   id        String   @id @default(cuid())
   name      String
+  content   String   @db.Text
+  isDone    Boolean
   eventId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
