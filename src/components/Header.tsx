@@ -1,5 +1,6 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 function Header() {
   const { data: sessionData } = useSession();
@@ -16,9 +17,11 @@ function Header() {
             className="w-10 cursor-pointer overflow-hidden rounded-full"
             onClick={() => void signOut()}
           >
-            <img
+            <Image
               src={sessionData?.user?.image ?? ""}
               alt={sessionData?.user?.name ?? ""}
+              width={500}
+              height={500}
             />
           </div>
         ) : (
