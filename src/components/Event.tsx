@@ -1,8 +1,34 @@
 import React from "react";
+import { type RouterOutputs } from "~/utils/api";
+import { AiFillDelete } from "react-icons/ai";
 
-function Event({ name }: { name: string }) {
+type EventType = RouterOutputs["event"]["getAll"][0];
+
+type PropType = {
+  event: EventType;
+  selectedEvent: EventType | null;
+  deleteEvent: any;
+};
+
+function Event({ event, selectedEvent, deleteEvent }: PropType) {
   return (
-    <div className="rounded-md p-3 duration-100 hover:bg-gray-500">{name}</div>
+    <div className="flex items-center justify-between gap-3">
+      <div
+        className={` w-full rounded-md p-3 text-white text-opacity-50 duration-100 hover:bg-gray-500 ${
+          event.name == selectedEvent?.name && `bg-gray-600 !text-opacity-100`
+        }`}
+      >
+        {event.name}
+      </div>
+      <div
+        className="group  rounded-md px-2 py-4 duration-100 hover:bg-red-700"
+        onClick={() => {
+          deleteEvent.mutate({ id: event.id });
+        }}
+      >
+        <AiFillDelete className="text-red-500 group-hover:text-white" />
+      </div>
+    </div>
   );
 }
 

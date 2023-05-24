@@ -1,18 +1,30 @@
-import React from "react";
-import { api } from "~/utils/api";
+import React, { useState } from "react";
+import { api, type RouterOutputs } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import Event from "~/components/Event";
 
+type EventType = RouterOutputs["event"]["getAll"][0];
+
 function Events() {
+  const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const { data: sessionData } = useSession();
   const { data: events, refetch: refetchEvents } = api.event.getAll.useQuery(
     undefined,
     {
       enabled: sessionData?.user !== undefined,
+      onSuccess: (data) => {
+        setSelectedEvent(selectedEvent ?? data[0] ?? null); // when get, set selected event to selected event, otherwise first data that is returned, otherwise null
+      },
     }
   );
 
   const createEvent = api.event.create.useMutation({
+    onSuccess: () => {
+      void refetchEvents();
+    },
+  });
+
+  const deleteEvent = api.event.delete.useMutation({
     onSuccess: () => {
       void refetchEvents();
     },
@@ -63,16 +75,21 @@ function Events() {
         <div className="mt-4 h-1 bg-gray-700"></div>
       </div>
       <div className="col-span-3 mt-3">
-        <ul>
+        <ul className="flex flex-col gap-2">
           {events?.map((event) => (
             <li
               key={event.id}
               onClick={(evt) => {
                 evt.preventDefault();
+                setSelectedEvent(event);
               }}
             >
               <a href="#">
-                <Event name={event.name} />
+                <Event
+                  event={event}
+                  selectedEvent={selectedEvent}
+                  deleteEvent={deleteEvent}
+                />
               </a>
             </li>
           ))}

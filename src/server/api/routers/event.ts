@@ -22,4 +22,14 @@ export const eventRouter = createTRPCRouter({
         },
       });
     }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.event.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
