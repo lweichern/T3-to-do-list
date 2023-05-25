@@ -21,7 +21,9 @@ function Event({ event, selectedEvent }: PropType) {
     <div className="flex items-center justify-between gap-3">
       <div
         className={` w-full rounded-md p-3 text-white text-opacity-50 duration-100 hover:bg-gray-500 ${
-          event.name == selectedEvent?.name && `bg-gray-600 !text-opacity-100`
+          event.name == selectedEvent?.name
+            ? `bg-gray-600 !text-opacity-100`
+            : ""
         }`}
       >
         {event.name}
