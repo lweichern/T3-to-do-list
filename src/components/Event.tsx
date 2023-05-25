@@ -1,5 +1,5 @@
 import React from "react";
-import { type RouterOutputs } from "~/utils/api";
+import { api, type RouterOutputs } from "~/utils/api";
 import { AiFillDelete } from "react-icons/ai";
 
 type EventType = RouterOutputs["event"]["getAll"][0];
@@ -7,10 +7,16 @@ type EventType = RouterOutputs["event"]["getAll"][0];
 type PropType = {
   event: EventType;
   selectedEvent: EventType | null;
-  deleteEvent: any;
 };
 
-function Event({ event, selectedEvent, deleteEvent }: PropType) {
+function Event({ event, selectedEvent }: PropType) {
+  const { refetch: refetchEvents } = api.event.getAll.useQuery();
+  const deleteEvent = api.event.delete.useMutation({
+    onSuccess: () => {
+      void refetchEvents();
+    },
+  });
+
   return (
     <div className="flex items-center justify-between gap-3">
       <div

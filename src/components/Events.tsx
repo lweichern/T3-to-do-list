@@ -24,11 +24,6 @@ function Events() {
     },
   });
 
-  const deleteEvent = api.event.delete.useMutation({
-    onSuccess: () => {
-      void refetchEvents();
-    },
-  });
   return (
     <div className="mx-5 mt-5 grid-cols-4 gap-2 text-lg text-white">
       <div className="px-2">
@@ -85,11 +80,7 @@ function Events() {
               }}
             >
               <a href="#">
-                <Event
-                  event={event}
-                  selectedEvent={selectedEvent}
-                  deleteEvent={deleteEvent}
-                />
+                <Event event={event} selectedEvent={selectedEvent} />
               </a>
             </li>
           ))}
