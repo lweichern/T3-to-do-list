@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import Header from "~/components/Header";
 import Events from "~/components/Events";
+import Tasks from "~/components/Tasks";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -16,7 +17,7 @@ const Home: NextPage = () => {
       </Head>
       <main className=" h-screen bg-gray-800">
         <Header />
-        <div className="flex">
+        <div>
           <Events />
         </div>
       </main>
