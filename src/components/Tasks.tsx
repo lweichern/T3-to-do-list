@@ -56,9 +56,8 @@ function Tasks({ selectedEvent }: PropType) {
 
       <div className="mt-3 grid auto-rows-[1fr] grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {tasks?.map((elem) => (
-          <div>
+          <div key={elem.id}>
             <Task
-              key={elem.id}
               task={elem}
               selectedEvent={selectedEvent}
               setIsOpen={setIsOpen}

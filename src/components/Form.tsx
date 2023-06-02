@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction, Fragment } from "react";
+import React, { Fragment } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { api, type RouterOutputs } from "~/utils/api";
 import { Session } from "next-auth";

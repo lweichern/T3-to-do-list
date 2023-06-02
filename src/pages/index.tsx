@@ -3,7 +3,6 @@ import Head from "next/head";
 
 import Header from "~/components/Header";
 import Events from "~/components/Events";
-import Tasks from "~/components/Tasks";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
