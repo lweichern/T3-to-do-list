@@ -24,7 +24,7 @@ function Tasks({ selectedEvent }: PropType) {
   );
 
   return (
-    <div className=" mr-2 mt-4 flex-1 rounded-md bg-gray-600 px-3 text-white shadow-inner">
+    <div className=" mr-2 mt-4 flex-1 rounded-md bg-gray-600 p-3 text-white shadow-inner">
       <div className="flex items-center">
         <h2 className="flex-1 text-center text-3xl">Tasks</h2>
         <button
@@ -37,13 +37,11 @@ function Tasks({ selectedEvent }: PropType) {
         </button>
       </div>
 
-      <ul>
+      <div className="mt-3 grid auto-rows-[1fr] grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {tasks?.map((elem) => (
-          <li key={elem.id}>
-            <Task task={elem} />
-          </li>
+          <Task key={elem.id} task={elem} selectedEvent={selectedEvent} />
         ))}
-      </ul>
+      </div>
       <div></div>
 
       <Form
