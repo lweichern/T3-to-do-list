@@ -4,15 +4,26 @@ import { api, type RouterOutputs } from "~/utils/api";
 import { Session } from "next-auth";
 
 type EventType = RouterOutputs["event"]["getAll"][0];
+type TaskType = RouterOutputs["task"]["getAll"][0];
 
 type PropType = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedEvent: EventType | null;
   sessionData: Session | null;
+  selectedTask?: TaskType | null;
+  setTaskEmpty?: () => void;
 };
 
-function Form({ isOpen, setIsOpen, selectedEvent, sessionData }: PropType) {
+function Form({
+  isOpen,
+  setIsOpen,
+  selectedEvent,
+  sessionData,
+  selectedTask,
+  setTaskEmpty,
+}: PropType) {
+  console.log("task: ", selectedTask);
   const { refetch: refetchTasks } = api.task.getAll.useQuery(
     {
       eventId: selectedEvent?.id || "",
@@ -28,13 +39,22 @@ function Form({ isOpen, setIsOpen, selectedEvent, sessionData }: PropType) {
     },
   });
 
+  const updateTask = api.task.update.useMutation({
+    onSuccess: () => {
+      void refetchTasks();
+    },
+  });
+
   return (
     <div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10 "
-          onClose={() => setIsOpen(false)}
+          onClose={() => {
+            setIsOpen(false);
+            setTaskEmpty?.();
+          }}
         >
           <Transition.Child
             as={Fragment}
@@ -64,7 +84,7 @@ function Form({ isOpen, setIsOpen, selectedEvent, sessionData }: PropType) {
                     as="h3"
                     className="text-center text-2xl font-medium leading-6"
                   >
-                    Add Task
+                    {selectedTask ? "Edit Task" : "Add Task"}
                   </Dialog.Title>
                   <div className="mt-2">
                     <form
@@ -82,11 +102,18 @@ function Form({ isOpen, setIsOpen, selectedEvent, sessionData }: PropType) {
                           ) as HTMLTextAreaElement
                         ).value;
 
-                        createTask.mutate({
-                          name: title,
-                          content: content,
-                          eventId: selectedEvent?.id || "",
-                        });
+                        selectedTask
+                          ? updateTask.mutate({
+                              id: selectedTask.id,
+                              name: title,
+                              content: content,
+                              isDone: selectedTask.isDone,
+                            })
+                          : createTask.mutate({
+                              name: title,
+                              content: content,
+                              eventId: selectedEvent?.id || "",
+                            });
 
                         (
                           document.getElementById("title") as HTMLInputElement
@@ -97,12 +124,14 @@ function Form({ isOpen, setIsOpen, selectedEvent, sessionData }: PropType) {
                         ).value = "";
 
                         setIsOpen(false);
+                        setTaskEmpty?.();
                       }}
                     >
                       <label className="text-lg">Title:</label>
                       <input
                         type="text"
                         id="title"
+                        defaultValue={selectedTask?.name || ""}
                         className="bg-gray-800 p-2 text-white"
                       />
 
@@ -110,13 +139,14 @@ function Form({ isOpen, setIsOpen, selectedEvent, sessionData }: PropType) {
                       <textarea
                         id="content"
                         rows={6}
+                        defaultValue={selectedTask?.content || ""}
                         className="bg-gray-800 p-2 text-white"
                       ></textarea>
 
                       <input
                         type="submit"
                         className="mx-auto my-2 w-fit cursor-pointer rounded-md border-2 border-solid border-gray-900 p-2 hover:bg-slate-700"
-                        value="Add"
+                        value={selectedTask ? "Update" : "Add"}
                       />
                     </form>
                   </div>

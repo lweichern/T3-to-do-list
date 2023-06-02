@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { type RouterOutputs, api } from "~/utils/api";
 
 type TaskType = RouterOutputs["task"]["getAll"][0];
@@ -6,10 +6,11 @@ type EventType = RouterOutputs["event"]["getAll"][0];
 
 type PropType = {
   task: TaskType;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedEvent: EventType | null;
 };
 
-function Task({ task, selectedEvent }: PropType) {
+function Task({ task, selectedEvent, setIsOpen }: PropType) {
   const { refetch: refetchTasks } = api.task.getAll.useQuery({
     eventId: selectedEvent?.id || "",
   });
@@ -22,7 +23,7 @@ function Task({ task, selectedEvent }: PropType) {
   return (
     <div
       className={`${
-        task.isDone ? "bg-green-500" : "bg-red-500"
+        task.isDone ? "bg-green-600" : "bg-red-500"
       } cursor-pointer rounded-lg p-3`}
       onDoubleClick={() => {
         updateTask.mutate({
