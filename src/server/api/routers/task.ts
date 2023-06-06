@@ -11,6 +11,9 @@ export const taskRouter = createTRPCRouter({
         where: {
           eventId: input.eventId,
         },
+        orderBy: {
+          createdAt: "asc",
+        },
       });
     }),
   create: protectedProcedure

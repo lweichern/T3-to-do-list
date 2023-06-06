@@ -56,26 +56,30 @@ function Tasks({ selectedEvent }: PropType) {
 
       <div className="mt-3 grid auto-rows-[1fr] grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {tasks?.map((elem) => (
-          <div key={elem.id}>
+          <div key={elem.id} className="flex flex-col">
             <Task
               task={elem}
               selectedEvent={selectedEvent}
               setIsOpen={setIsOpen}
             />
 
-            <div className="flex">
-              <AiFillEdit
-                className="cursor-pointer text-blue-400"
+            <div className="flex w-full overflow-hidden rounded-bl-md rounded-br-md bg-white">
+              <div
+                className="w-[50%] cursor-pointer bg-blue-400 p-2 duration-100 hover:bg-blue-600"
                 onClick={() => {
                   setIsOpen(true);
                   setTask(elem);
                 }}
-              />
+              >
+                <AiFillEdit className="mx-auto cursor-pointer text-lg" />
+              </div>
 
-              <AiFillDelete
-                className="cursor-pointer text-red-500"
+              <div
+                className="w-[50%] cursor-pointer  bg-red-700 p-2 duration-100 hover:bg-red-800"
                 onClick={() => deleteTask.mutate({ id: elem.id })}
-              />
+              >
+                <AiFillDelete className="mx-auto cursor-pointer text-lg" />
+              </div>
             </div>
           </div>
         ))}

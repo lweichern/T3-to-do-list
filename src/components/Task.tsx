@@ -25,7 +25,7 @@ function Task({ task, selectedEvent, setIsOpen }: PropType) {
     <div
       className={`${
         task.isDone ? "bg-green-600" : "bg-red-500"
-      } cursor-pointer rounded-lg p-3`}
+      } flex-1 cursor-pointer rounded-tl-md rounded-tr-md p-3`}
       onDoubleClick={() => {
         updateTask.mutate({
           id: task.id,
@@ -35,7 +35,7 @@ function Task({ task, selectedEvent, setIsOpen }: PropType) {
         });
       }}
     >
-      <div>
+      <div className="select-none">
         {task.name} - {task.content}
       </div>
     </div>

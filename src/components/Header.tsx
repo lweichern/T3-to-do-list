@@ -13,16 +13,21 @@ function Header() {
       </div>
       <div>
         {sessionData ? (
-          <div
-            className="w-10 cursor-pointer overflow-hidden rounded-full"
-            onClick={() => void signOut()}
-          >
-            <Image
-              src={sessionData?.user?.image ?? ""}
-              alt={sessionData?.user?.name ?? ""}
-              width={500}
-              height={500}
-            />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => void signOut()}
+              className="rounded-md bg-red-600 p-1 text-white hover:bg-red-700"
+            >
+              Sign Out
+            </button>
+            <div className="w-10 overflow-hidden rounded-full">
+              <Image
+                src={sessionData?.user?.image ?? ""}
+                alt={sessionData?.user?.name ?? ""}
+                width={500}
+                height={500}
+              />
+            </div>
           </div>
         ) : (
           <button
