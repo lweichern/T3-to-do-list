@@ -24,7 +24,6 @@ function Form({
   selectedTask,
   setTaskEmpty,
 }: PropType) {
-  console.log("task: ", selectedTask);
   const { refetch: refetchTasks } = api.task.getAll.useQuery(
     {
       eventId: selectedEvent?.id || "",
@@ -146,7 +145,7 @@ function Form({
 
                       <input
                         type="submit"
-                        className="mx-auto my-2 w-fit cursor-pointer rounded-md border-2 border-solid border-gray-900 p-2 hover:bg-slate-700"
+                        className="mx-auto my-2 w-full cursor-pointer rounded-md border-2 border-solid border-gray-900 p-2 duration-100 hover:border-slate-600 hover:bg-slate-600"
                         value={selectedTask ? "Update" : "Add"}
                       />
                     </form>

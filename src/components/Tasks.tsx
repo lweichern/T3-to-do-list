@@ -41,9 +41,9 @@ function Tasks({ selectedEvent }: PropType) {
   };
 
   return (
-    <div className=" mr-2 mt-4 flex-1 rounded-md bg-gray-600 p-3 text-white shadow-inner">
+    <div className=" mx-4 my-4 flex-1 rounded-md bg-gray-600 p-3 text-white shadow-inner">
       <div className="flex items-center">
-        <h2 className="flex-1 text-center text-3xl">Tasks</h2>
+        <h2 className="flex-1 text-left text-3xl">Tasks</h2>
         <button
           className="mt-2 flex items-center gap-2 rounded-md bg-green-600 p-2 duration-100 hover:bg-green-400"
           onClick={() => {

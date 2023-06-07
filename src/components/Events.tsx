@@ -26,14 +26,14 @@ function Events() {
   });
 
   return (
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
       <div className="mx-5 mt-5 grid-cols-4 gap-2 text-lg text-white">
-        <div className="px-2">
+        <div className="flex">
           <input
             type="text"
             placeholder="Enter New Event..."
             id="eventName"
-            className=" focus:shadow-outline appearance-none rounded border bg-gray-700 px-3 py-2 leading-tight shadow focus:outline-none"
+            className="focus:shadow-outline flex-1 appearance-none rounded border bg-gray-700 px-3 py-2 leading-tight shadow focus:outline-none"
             onKeyDown={(e) => {
               if (e.currentTarget.value.trim() == "") {
                 return;

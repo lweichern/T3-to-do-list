@@ -6,7 +6,7 @@ function Header() {
   const { data: sessionData } = useSession();
   return (
     <nav className=" flex items-center justify-between bg-[#475B63] p-3">
-      <div className=" text-3xl text-white">
+      <div className=" text-xl text-white lg:text-3xl">
         {sessionData?.user?.name
           ? `Event Memo for ${sessionData?.user?.name}`
           : ""}
